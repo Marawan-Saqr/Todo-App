@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate, useState } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Swal from 'sweetalert2';
@@ -21,14 +21,13 @@ const Login = () => {
 
 
   // Destruct From React Hook Form
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    mode: 'onTouched',
-    resolver: zodResolver(schema),
-  });
+  const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onTouched', resolver: zodResolver(schema) });
 
 
+  // Login Function
   const onSubmit = async (data) => {
     try {
+      // Success Case
       const response = await axios.post("http://ec2-16-171-24-86.eu-north-1.compute.amazonaws.com/api/auth/login", data);
       const token = response.data.accessToken;
       if (token) {
@@ -40,21 +39,28 @@ const Login = () => {
           icon: 'success',
           confirmButtonText: 'OK'
         }).then(() => {
-          navigate("/register");
-        });
-      } else {
-        Swal.fire({
-          title: 'Error!',
-          text: 'No token received. Please try again.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-      }
+          navigate("/system");
+      });
+    }
+    // Error Cases
     } catch (error) {
       console.error("Login failed:", error);
+      console.error("Login failed:", error.response.data.message);
+      let errorMessage = 'Login failed. Invalid Email Or Password.';
+      if (error.response) {
+        if (error.response.status === 400) {
+          errorMessage = 'Invalid Email or Password.';
+        } else {
+          errorMessage = `Error ${error.response.status}: ${error.response.data.message || 'Something went wrong.'}`;
+        }
+      } else if (error.request) {
+        errorMessage = 'Unable to connect to the server. Please check your internet connection and try again.';
+      } else {
+        errorMessage = `An error occurred: ${error.message || 'Unknown error'}`;
+      }
       Swal.fire({
         title: 'Error!',
-        text: 'Login failed. Please check your credentials and try again.',
+        text: errorMessage,
         icon: 'error',
         confirmButtonText: 'OK'
       });
@@ -78,7 +84,7 @@ const Login = () => {
               placeholder="Enter your email"
               {...register("email")}
             />
-            {errors.email && <p className="text-danger mt-2">{errors.email.message}</p>} {/* Use text-danger for error message */}
+            {errors.email && <p className="text-danger mt-2">{errors.email.message}</p>}
           </div>
 
 
@@ -91,7 +97,7 @@ const Login = () => {
               placeholder="Enter your password"
               {...register("password")}
             />
-            {errors.password && <p className="text-danger mt-2">{errors.password.message}</p>} {/* Use text-danger for error message */}
+            {errors.password && <p className="text-danger mt-2">{errors.password.message}</p>}
           </div>
 
 
