@@ -1,0 +1,86 @@
+.topbar {
+  background-color: #181a1d;
+  color: white;
+  padding: 10px 0;
+  border-bottom: 4px solid mediumvioletred;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.topbar .navbar-brand,
+.topbar .navbar-nav .nav-link,
+.topbar .welcome-text {
+  color: #ffffff !important;
+}
+
+.topbar .navbar-brand {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.topbar .nav-link {
+  margin-right: 1rem;
+  transition: color 0.2s ease-in-out;
+  transition: all 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.topbar .nav-link:hover {
+  color: mediumvioletred !important;
+  transform: scale(1.5, 1.5);
+  -webkit-transform: scale(1.5, 1.5);
+  -moz-transform: scale(1.5, 1.5);
+  -ms-transform: scale(1.5, 1.5);
+  -o-transform: scale(1.5, 1.5);
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.topbar .welcome-text {
+  font-size: 1rem;
+  margin-bottom: 0px;
+}
+
+.topbar i {
+  margin: 0px 1rem;
+  cursor: pointer;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.topbar i:hover {
+  color: mediumvioletred;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.topbar .welcome-text {
+  color: #f0f0f0;
+  transition: color 0.5s ease;
+}
+
+.topbar .theme-icon {
+  color: #f0f0f0;
+  font-size: 1.2em;
+  transition: transform 0.3s ease, color 0.5s ease;
+}
+
+.topbar .theme-icon:hover {
+  transform: rotate(20deg);
+}
+
+.topbar .options {
+  display: flex;
+  align-items: center;
+}
