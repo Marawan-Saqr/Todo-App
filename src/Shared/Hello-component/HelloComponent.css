@@ -1,0 +1,14 @@
+/* HelloComponent.css */
+.hello-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.hello-container h1 {
+  font-weight: bold;
+}

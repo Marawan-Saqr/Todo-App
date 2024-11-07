@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import components from '../../../Shared/Styled-components/Buttons';
+import { Link } from 'react-router-dom';
 import './TopBar.css';
 
 const TopBar = () => {
@@ -53,12 +54,14 @@ const TopBar = () => {
     <div>
       <Navbar expand="lg" className="topbar">
         <Container>
-          <Navbar.Brand href="#"><i class="fa-solid fa-clipboard-list"></i>MY TODO</Navbar.Brand>
+          <Navbar.Brand href="#"><i className="fa-solid fa-clipboard-list"></i>
+            <Link style={{color: '#fff', textDecoration: 'none'}} to={"/system"}>MY TODO</Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="m-auto my-2 my-lg-0" navbarScroll>
-              <Nav.Link href="#todos">Todos</Nav.Link>
-              <Nav.Link href="#statistics">Statistics</Nav.Link>
+              <Link className="nav-link" to={"todos"}>Todos</Link>
+              <Link className="nav-link">Statistics</Link>
             </Nav>
             <div className='options'>
               <h6 className="welcome-text">{email ? email : "Guest"}</h6>
