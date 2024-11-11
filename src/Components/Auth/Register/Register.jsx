@@ -39,7 +39,7 @@ const Register = () => {
   // Register Function
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://ec2-16-171-24-86.eu-north-1.compute.amazonaws.com/api/auth/register", data);
+      const response = await axios.post("http://localhost:3000/api/auth/register", data);
       if (response.status === 201) {
         Swal.fire({
           title: 'Success!',

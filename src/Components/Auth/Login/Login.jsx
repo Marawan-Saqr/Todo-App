@@ -28,7 +28,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       // Success Case
-      const response = await axios.post("http://ec2-16-171-24-86.eu-north-1.compute.amazonaws.com/api/auth/login", data);
+      const response = await axios.post("http://localhost:3000/api/auth/login", data);
       const token = response.data.accessToken;
       if (token) {
         localStorage.setItem("token", token);
@@ -40,12 +40,12 @@ const Login = () => {
           confirmButtonText: 'OK'
         }).then(() => {
           navigate("/system");
-      });
+        });
+      }
     }
     // Error Cases
-    } catch (error) {
+    catch (error) {
       console.error("Login failed:", error);
-      console.error("Login failed:", error.response.data.message);
       let errorMessage = 'Login failed. Invalid Email Or Password.';
       if (error.response) {
         if (error.response.status === 400) {
@@ -54,7 +54,8 @@ const Login = () => {
           errorMessage = `Error ${error.response.status}: ${error.response.data.message || 'Something went wrong.'}`;
         }
       } else if (error.request) {
-        errorMessage = 'Unable to connect to the server. Please check your internet connection and try again.';
+        // This will trigger when the request was made but no response was received (e.g., server is down)
+        errorMessage = 'Unable to connect to the server. Please try again later.';
       } else {
         errorMessage = `An error occurred: ${error.message || 'Unknown error'}`;
       }

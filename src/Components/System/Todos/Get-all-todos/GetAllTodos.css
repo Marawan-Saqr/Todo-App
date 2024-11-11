@@ -4,55 +4,140 @@
   padding: 20px;
 }
 
-h2 {
+.table-container h2 {
   text-align: center;
   margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
-.todo-form {
+.table-container .todo-form {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
 }
 
-.input-field {
+.table-container .input-field {
   margin: 10px 0;
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid mediumvioletred;
+  transition: 0.6s;
+  -webkit-transition: 0.6s;
+  -moz-transition: 0.6s;
+  -ms-transition: 0.6s;
+  -o-transition: 0.6s;
+  background-color: black;
+  color: #fff;
 }
 
-.submit-button {
+.table-container .input-field:focus {
+  box-shadow: 0 0 15px mediumvioletred;
+  outline: none;
+  transition: 0.6s;
+  -webkit-transition: 0.6s;
+  -moz-transition: 0.6s;
+  -ms-transition: 0.6s;
+  -o-transition: 0.6s;
+}
+
+.table-container .submit-button {
   padding: 10px;
-  background-color: #4CAF50;
+  background-color: mediumvioletred;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  text-transform: uppercase;
 }
 
-.submit-button:hover {
-  background-color: #45a049;
+.table-container .submit-button:hover {
+  background-color: #660241;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
 }
 
-.todos-table {
+.table-container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.table-container .todos-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-.todos-table th, .todos-table td {
+.table-container .todos-table th, .todos-table td {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: left;
 }
 
-.todos-table th {
-  background-color: #f4f4f4;
+.table-container .todos-table td[class="actions"] {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
 }
 
-.todos-table tr:hover {
-  background-color: #f1f1f1;
+.table-container .todos-table td[class="actions"] i[class="fa-solid fa-eye"] {
+  color: #b3b31a;
+  cursor: pointer;
+}
+
+.table-container .todos-table td[class="actions"] i[class="fa-solid fa-eye"]:hover {
+  color: #7c7c0f;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.table-container .todos-table td[class="actions"] i[class="fa-solid fa-pen"] {
+  color: #4444d5;
+  cursor: pointer;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.table-container .todos-table td[class="actions"] i[class="fa-solid fa-pen"]:hover {
+  color: #2c2c92;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.table-container .todos-table td[class="actions"] i[class="fa-solid fa-trash"] {
+  color: #f43434;
+  cursor: pointer;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.table-container .todos-table td[class="actions"] i[class="fa-solid fa-trash"]:hover {
+  color: #a72020;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
 }
