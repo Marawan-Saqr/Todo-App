@@ -128,6 +128,7 @@ const GetAllTodos = () => {
             <th>Description</th>
             <th>Status</th>
             <th>Created Time</th>
+            <th>Updated Time</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -145,6 +146,7 @@ const GetAllTodos = () => {
                   />
                 </td>
                 <td>{todo.createdAt}</td>
+                <td>{todo.updatedAt}</td>
                 <td className='actions'>
                   <Link to={`/system/todos/todo-details/${todo.id}`} ><i className="fa-solid fa-eye"></i></Link>
                   <i className="fa-solid fa-pen"></i>

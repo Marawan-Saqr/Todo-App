@@ -1,10 +1,11 @@
 .todo-details .outer {
-  width: 300px;
+  width: 800px;
   height: 250px;
   border-radius: 10px;
   padding: 1px;
   background: radial-gradient(circle 230px at 0% 0%, #ffffff, #0c0d0d);
   position: relative;
+  margin: 30px auto;
 }
 
 .todo-details .dot {
@@ -18,30 +19,6 @@
   right: 10%;
   top: 10%;
   animation: moveDot 6s linear infinite;
-}
-
-@keyframes moveDot {
-
-  0%,
-  100% {
-    top: 10%;
-    right: 10%;
-  }
-
-  25% {
-    top: 10%;
-    right: calc(100% - 35px);
-  }
-
-  50% {
-    top: calc(100% - 30px);
-    right: calc(100% - 35px);
-  }
-
-  75% {
-    top: calc(100% - 30px);
-    right: 10%;
-  }
 }
 
 .todo-details .card {
