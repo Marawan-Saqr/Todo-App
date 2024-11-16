@@ -27,7 +27,7 @@
   -moz-transition: 0.6s;
   -ms-transition: 0.6s;
   -o-transition: 0.6s;
-  background-color: black;
+  background-color: #242424;
   color: #fff;
 }
 
@@ -84,77 +84,12 @@
   overflow-x: auto;
 }
 
-.table-container .todos-table {
-  border-collapse: collapse;
-  margin-top: 20px;
+.table-container .table-responsive table {
+  border: 1px solid #fff;
 }
 
-.table-container .todos-table th, .todos-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
+.table-container .table-responsive th {
+  background-color: black;
+  color: #fff;
+  border: 1px solid #fff;
 }
-
-.table-container .todos-table thead tr {
-  background-color: mediumvioletred;
-}
-
-.table-container .todos-table td[class="actions"] {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  align-items: center;
-}
-
-.table-container .todos-table td[class="actions"] i[class="fa-solid fa-eye"] {
-  color: #b3b31a;
-  cursor: pointer;
-}
-
-.table-container .todos-table td[class="actions"] i[class="fa-solid fa-eye"]:hover {
-  color: #7c7c0f;
-  transition: 0.5s;
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
-  -ms-transition: 0.5s;
-  -o-transition: 0.5s;
-}
-
-.table-container .todos-table td[class="actions"] i[class="fa-solid fa-pen"] {
-  color: #4444d5;
-  cursor: pointer;
-  transition: 0.5s;
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
-  -ms-transition: 0.5s;
-  -o-transition: 0.5s;
-}
-
-.table-container .todos-table td[class="actions"] i[class="fa-solid fa-pen"]:hover {
-  color: #2c2c92;
-  transition: 0.5s;
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
-  -ms-transition: 0.5s;
-  -o-transition: 0.5s;
-}
-
-.table-container .todos-table td[class="actions"] i[class="fa-solid fa-trash"] {
-  color: #f43434;
-  cursor: pointer;
-  transition: 0.5s;
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
-  -ms-transition: 0.5s;
-  -o-transition: 0.5s;
-}
-
-.table-container .todos-table td[class="actions"] i[class="fa-solid fa-trash"]:hover {
-  color: #a72020;
-  transition: 0.5s;
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
-  -ms-transition: 0.5s;
-  -o-transition: 0.5s;
-}
-

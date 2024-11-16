@@ -9,12 +9,10 @@ import axios from "axios";
 import "./GetAllTodos.css";
 
 const GetAllTodos = () => {
-
   // Component States
   const [todos, setTodos] = useState([]);
   const [loadingTodos, setLoadingTodos] = useState(false);
   const navigate = useNavigate();
-
 
   // Zod schema
   const todoSchema = z.object({
@@ -30,10 +28,11 @@ const GetAllTodos = () => {
       .max(50, { message: "Description max characters 50 char" }),
   });
 
-
   // React Hook Form Destruct
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: "onChange", resolver: zodResolver(todoSchema) });
-
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    mode: "onChange",
+    resolver: zodResolver(todoSchema),
+  });
 
   // Add Todo Function
   const addTodo = async (data) => {
@@ -51,7 +50,6 @@ const GetAllTodos = () => {
       Swal.fire("Error", "Failed to add todo", "error");
     }
   };
-
 
   // Get All Todos
   const getAllTodos = async () => {
@@ -73,7 +71,6 @@ const GetAllTodos = () => {
     }
   };
 
-
   // Update Todo
   const toggleTodoDone = async (todoId, currentStatus, title, description) => {
     const token = localStorage.getItem("token");
@@ -82,8 +79,8 @@ const GetAllTodos = () => {
       "Content-Type": "application/json",
     };
     const updatedTodo = {
-      title: title,
-      description: description,
+      title,
+      description,
       done: !currentStatus,
     };
     try {
@@ -103,7 +100,6 @@ const GetAllTodos = () => {
       console.error("Error updating todo status:", error);
     }
   };
-
 
   // Delete todo Function
   const deleteTodo = async (todoId) => {
@@ -135,12 +131,10 @@ const GetAllTodos = () => {
     }
   };
 
-
   // UseEffect
   useEffect(() => {
     getAllTodos();
   }, []);
-
 
   return (
     <div className="table-container">
@@ -154,7 +148,6 @@ const GetAllTodos = () => {
           {...register("title")}
         />
         {errors.title && <p className="text-danger">{errors.title.message}</p>}
-
 
         {/* Description */}
         <textarea
@@ -177,73 +170,87 @@ const GetAllTodos = () => {
         You Have Now <span>{todos.length}</span>
         {todos.length > 1 ? " Tasks" : " Task"}
       </h6>
-      <table className="todos-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Created Time</th>
-            <th>Updated Time</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loadingTodos ? (
-            <div className="col-md-9 d-flex justify-content-center align-items-center">
-              <Loader />
-            </div>
-          ) : todos.length > 0 ? (
-            todos.map((todo) => (
-              <tr key={todo.id}>
-                <td>{todo.title}</td>
-                <td>{todo.description}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={todo.done}
-                    onChange={() =>
-                      toggleTodoDone(
-                        todo.id,
-                        todo.done,
-                        todo.title,
-                        todo.description
-                      )
-                    }
-                  />
-                </td>
-                <td>{todo.createdAt}</td>
-                <td>{todo.updatedAt}</td>
-                <td className="actions">
-                  <Link to={`/system/todos/todo-details/${todo.id}`}>
-                    <i className="fa-solid fa-eye"></i>
-                  </Link>
-                  <button style={{background: 'none', border: 'none'}}
-                    onClick={() =>
-                      navigate(`/system/todos/update-todo/${todo.id}`, {
-                        state: todo,
-                      })
-                    }
-                  >
-                    <Link style={{ color: "white", textDecoration: "none" }}>
-                      <i className="fa-solid fa-pen"></i>
-                    </Link>
-                  </button>
-                  <i
-                    onClick={() => deleteTodo(todo.id)}
-                    className="fa-solid fa-trash"
-                  ></i>
+      <div className="table-responsive">
+        <table className="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Status</th>
+              <th scope="col">Created Time</th>
+              <th scope="col">Updated Time</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loadingTodos ? (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  <Loader />
                 </td>
               </tr>
-            ))
-          ) : (
-            <h3 style={{ textAlign: "center", marginTop: "30px" }}>
-              No Todos Enjoy Your Day{" "}
-              <i className="fa-regular fa-face-smile"></i>
-            </h3>
-          )}
-        </tbody>
-      </table>
+            ) : todos.length > 0 ? (
+              todos.map((todo) => (
+                <tr key={todo.id}>
+                  <td>{todo.title}</td>
+                  <td>{todo.description}</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={todo.done}
+                      onChange={() =>
+                        toggleTodoDone(
+                          todo.id,
+                          todo.done,
+                          todo.title,
+                          todo.description
+                        )
+                      }
+                    />
+                  </td>
+                  <td>{todo.createdAt}</td>
+                  <td>{todo.updatedAt}</td>
+                  <td>
+                    <div className="btn-group" role="group">
+                      <Link
+                        to={`/system/todos/todo-details/${todo.id}`}
+                        className="btn btn-sm btn-outline-primary"
+                      >
+                        <i className="fa-solid fa-eye"></i>
+                      </Link>
+                      <button
+                        className="btn btn-sm btn-outline-secondary"
+                        onClick={() =>
+                          navigate(`/system/todos/update-todo/${todo.id}`, {
+                            state: todo,
+                          })
+                        }
+                      >
+                        <i className="fa-solid fa-pen"></i>
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline-danger"
+                        onClick={() => deleteTodo(todo.id)}
+                      >
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  <h3>
+                    No Todos Enjoy Your Day{" "}
+                    <i className="fa-regular fa-face-smile"></i>
+                  </h3>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
