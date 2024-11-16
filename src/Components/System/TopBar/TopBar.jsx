@@ -3,13 +3,15 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import components from '../../../Shared/Styled-components/Buttons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
 import './TopBar.css';
 
 const TopBar = () => {
 
   // Component States
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigate = useNavigate();
 
 
   // Dark Mode Function
@@ -50,14 +52,35 @@ const TopBar = () => {
   const email = getEmailFromToken();
 
 
+  // Logout Function
+  const handleLogout = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      dangerMode: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    });
+  };
+
+
   return (
     <div>
-      <Navbar expand="lg" className="topbar">
+      <Navbar className="topbar" expand="lg">
         <Container>
-          <Navbar.Brand href="#"><i className="fa-solid fa-clipboard-list"></i>
-            <Link style={{color: '#fff', textDecoration: 'none'}} to={"/system"}>MY TODO</Link>
+          <Navbar.Brand><i className="fa-solid fa-clipboard-list"></i>
+            <Link style={{color: '#fff', textDecoration: 'none'}} to={"/system"}>TODO</Link>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Toggle aria-controls="navbarScroll" style={{backgroundColor: '#fff', color: 'mediumvioletred'}} />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="m-auto my-2 my-lg-0" navbarScroll>
               <Link className="nav-link" to={"todos"}>Todos</Link>
@@ -66,7 +89,7 @@ const TopBar = () => {
             <div className='options'>
               <h6 className="welcome-text">{email ? email : "Guest"}</h6>
               <i className={`fa-solid ${isDarkMode ? 'fa-sun' : 'fa-moon'} theme-icon`} onClick={toggleDarkMode} style={{ cursor: 'pointer', marginLeft: '10px' }}></i>
-              <components.DangerButton className="logout-btn">Logout</components.DangerButton>
+              <components.DangerButton onClick={()=> handleLogout()} className="logout-btn">Logout</components.DangerButton>
             </div>
           </Navbar.Collapse>
         </Container>

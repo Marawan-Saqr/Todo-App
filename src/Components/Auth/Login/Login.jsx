@@ -54,7 +54,6 @@ const Login = () => {
           errorMessage = `Error ${error.response.status}: ${error.response.data.message || 'Something went wrong.'}`;
         }
       } else if (error.request) {
-        // This will trigger when the request was made but no response was received (e.g., server is down)
         errorMessage = 'Unable to connect to the server. Please try again later.';
       } else {
         errorMessage = `An error occurred: ${error.message || 'Unknown error'}`;
@@ -72,7 +71,7 @@ const Login = () => {
   return (
     <div className="login d-flex justify-content-center align-items-center">
       <div className="form-container">
-        <h1 className="text-center pt-2 pb-2 fw-bold">Login</h1>
+        <h1 className="text-center pt-2 pb-2 fw-bold" style={{color: 'black'}}>Login</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-group">
 

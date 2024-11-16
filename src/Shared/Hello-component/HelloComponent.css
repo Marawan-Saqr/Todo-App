@@ -12,3 +12,7 @@
 .hello-container h1 {
   font-weight: bold;
 }
+
+.hello-container h5 i {
+  color: mediumvioletred;
+}

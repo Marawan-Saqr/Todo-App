@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Loader from '../../../../Shared/Loader/Loader';
 import "./TodoDetails.css";
 
 const TodosDetails = () => {
@@ -8,6 +9,7 @@ const TodosDetails = () => {
   // Component States
   const param = useParams();
   const [todo, setTodo] = useState(null);
+  const [loading, setLoading] = useState(true);
 
 
   // Get Todo Id From Url
@@ -20,8 +22,10 @@ const TodosDetails = () => {
     try {
       const response = await axios.get(`http://localhost:3000/api/todos/${param.TODOID}`, { headers });
       setTodo(response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching todo:", error);
+      setLoading(false);
     }
   };
 
@@ -32,27 +36,27 @@ const TodosDetails = () => {
   }, [param]);
 
 
-  // Check if the todo data is loaded
-  if (!todo) {
-    return <div>Loading...</div>;
-  }
-
-
   return (
     <div className="todo-details">
-      <div className="outer">
-        <div className="dot"></div>
-        <div className="card">
-          <div className="ray"></div>
-          <div className="text">{todo.title}</div>
-          <p>{todo.description}</p>
-          <p>{todo.done ? 'Completed' : 'Not Completed'}</p>
-          <div className="line topl"></div>
-          <div className="line leftl"></div>
-          <div className="line bottoml"></div>
-          <div className="line rightl"></div>
+      {loading ? (
+        <div className="loader-container">
+          <Loader />
         </div>
-      </div>
+      ) : (
+        <div className="outer">
+          <div className="dot"></div>
+          <div className="card">
+            <div className="ray"></div>
+            <h2>{todo.title}</h2>
+            <p>{todo.description}</p>
+            <p>{todo.done ? 'Completed' : 'Not Completed'}</p>
+            <div className="line topl"></div>
+            <div className="line leftl"></div>
+            <div className="line bottoml"></div>
+            <div className="line rightl"></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

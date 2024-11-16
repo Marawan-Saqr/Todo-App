@@ -1,0 +1,62 @@
+.update-todo h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  margin: 30px 0px;
+}
+
+.update-todo .todo-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.update-todo .input-field {
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid mediumvioletred;
+  transition: 0.6s;
+  -webkit-transition: 0.6s;
+  -moz-transition: 0.6s;
+  -ms-transition: 0.6s;
+  -o-transition: 0.6s;
+  background-color: black;
+  color: #fff;
+}
+
+.update-todo .input-field:focus {
+  box-shadow: 0 0 15px mediumvioletred;
+  outline: none;
+  transition: 0.6s;
+  -webkit-transition: 0.6s;
+  -moz-transition: 0.6s;
+  -ms-transition: 0.6s;
+  -o-transition: 0.6s;
+}
+
+.update-todo .submit-button {
+  padding: 10px;
+  background-color: mediumvioletred;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  text-transform: uppercase;
+}
+
+.update-todo .submit-button:hover {
+  background-color: #660241;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}

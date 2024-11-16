@@ -72,8 +72,19 @@
   text-transform: uppercase;
 }
 
+.table-container h6 {
+  font-weight: bold;
+}
+
+.table-container h6 span {
+  color: mediumvioletred;
+}
+
+.table-container .table-responsive {
+  overflow-x: auto;
+}
+
 .table-container .todos-table {
-  width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
@@ -90,8 +101,9 @@
 
 .table-container .todos-table td[class="actions"] {
   display: flex;
-  justify-content: space-around;
-  padding: 16px;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
 }
 
 .table-container .todos-table td[class="actions"] i[class="fa-solid fa-eye"] {
@@ -145,3 +157,4 @@
   -ms-transition: 0.5s;
   -o-transition: 0.5s;
 }
+

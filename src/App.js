@@ -8,6 +8,7 @@ import HelloComponent from './Shared/Hello-component/HelloComponent.jsx';
 import Todos from './Components/System/Todos/Todos.jsx';
 import GetAllTodos from './Components/System/Todos/Get-all-todos/GetAllTodos.jsx';
 import TodoDetails from './Components/System/Todos/todo-details/TodosDetails.jsx';
+import UpdateTodo from './Components/System/Todos/Update-todo/UpdateTodo.jsx';
 
 
 
@@ -27,6 +28,7 @@ function App() {
               <Route index element={<GetAllTodos />} />
               <Route path="get-all-todos" element={<GetAllTodos />} />
               <Route path="todo-details/:TODOID" element={<TodoDetails />} />
+              <Route path="update-todo/:TODOID" element={<UpdateTodo />} />
             </Route>
           </Route>
         </Routes>

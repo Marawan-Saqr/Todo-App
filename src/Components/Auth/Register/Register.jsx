@@ -30,10 +30,7 @@ const Register = () => {
 
 
   // Destruct From React Hook Form
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    mode: 'onTouched',
-    resolver: zodResolver(schema),
-  });
+  const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onTouched', resolver: zodResolver(schema)});
 
 
   // Register Function

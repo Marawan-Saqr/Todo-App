@@ -6,6 +6,10 @@
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+.topbar .navbar-brand i {
+  color: mediumvioletred;
+}
+
 .topbar .navbar-brand,
 .topbar .navbar-nav .nav-link,
 .topbar .welcome-text {

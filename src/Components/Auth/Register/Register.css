@@ -17,6 +17,12 @@
   text-transform: uppercase;
 }
 
+@media (max-width: 767px) {
+  .register .form-container h6 {
+    font-size: 12px;
+  }
+}
+
 .register .input-group {
   margin-bottom: 1.2rem;
   text-align: left;
