@@ -84,7 +84,7 @@ const TopBar = () => {
           <Navbar.Collapse id="navbarScroll">
             <Nav className="m-auto my-2 my-lg-0" navbarScroll>
               <Link className="nav-link" to={"todos"}>Todos</Link>
-              <Link className="nav-link">Statistics</Link>
+              <Link className="nav-link" to={"/system/profile"}>Profile</Link>
             </Nav>
             <div className='options'>
               <h6 className="welcome-text">{email ? email : "Guest"}</h6>
