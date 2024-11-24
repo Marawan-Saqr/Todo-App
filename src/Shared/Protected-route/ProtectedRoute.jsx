@@ -1,6 +1,6 @@
 const ProtectedRoute = () => {
   return (
-    <div>ProtectedRoute</div>
+    <div></div>
   )
 }
 export default ProtectedRoute;

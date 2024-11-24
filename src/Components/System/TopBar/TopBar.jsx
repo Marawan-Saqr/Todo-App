@@ -43,6 +43,7 @@ const TopBar = () => {
           .join('')
       );
       const payload = JSON.parse(jsonPayload);
+      console.log(payload);
       return payload.email || null;
     } catch (error) {
       console.error('Invalid token', error);
@@ -83,13 +84,16 @@ const TopBar = () => {
           <Navbar.Toggle aria-controls="navbarScroll" style={{backgroundColor: '#fff', color: 'mediumvioletred'}} />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="m-auto my-2 my-lg-0" navbarScroll>
-              <Link className="nav-link" to={"todos"}>Todos</Link>
-              <Link className="nav-link" to={"/system/profile"}>Profile</Link>
+              <Link className="nav-link" to={"todos"}><i class="fa-solid fa-pencil"></i>Todos</Link>
+              <Link className="nav-link" to={"/system/profile"}><i class="fa-solid fa-user"></i>Profile</Link>
+              <Link className="nav-link" to={"/system/charts"}><i class="fa-solid fa-chart-simple"></i>Statistics</Link>
+              <Link className="nav-link" to={"/system/wisdoms"}><i class="fa-solid fa-file-word"></i>Wisdoms</Link>
+              <Link className="nav-link" to={"/system/settings"}><i class="fa-solid fa-gear"></i>Settings</Link>
             </Nav>
             <div className='options'>
               <h6 className="welcome-text">{email ? email : "Guest"}</h6>
               <i className={`fa-solid ${isDarkMode ? 'fa-sun' : 'fa-moon'} theme-icon`} onClick={toggleDarkMode} style={{ cursor: 'pointer', marginLeft: '10px' }}></i>
-              <components.DangerButton onClick={()=> handleLogout()} className="logout-btn">Logout</components.DangerButton>
+              <components.DangerButton onClick={()=> handleLogout()} className="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Logout</components.DangerButton>
             </div>
           </Navbar.Collapse>
         </Container>

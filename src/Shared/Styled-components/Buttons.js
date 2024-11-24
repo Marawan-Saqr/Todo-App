@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const DangerButton = styled.button`
-  background-color: mediumvioletred;
+  background-color: var(--system-color);
   color: #fff;
   border: none;
   padding: 10px 11px;
@@ -9,7 +9,6 @@ const DangerButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
   &:hover {
     background-color: #72054a;
   }
@@ -24,7 +23,6 @@ const PrimaryButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
   &:hover {
     background-color: #0056b3;
   }

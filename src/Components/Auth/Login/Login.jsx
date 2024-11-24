@@ -1,3 +1,4 @@
+import "./Login.css";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -5,7 +6,6 @@ import { z } from "zod";
 import Swal from 'sweetalert2';
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from 'axios';
-import "./Login.css";
 
 const Login = () => {
 
