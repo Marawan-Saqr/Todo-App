@@ -1,5 +1,8 @@
+import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './Redux/Store/Store.js';
 import Auth from './Components/Auth/Auth.jsx';
 import Register from './Components/Auth/Register/Register.jsx';
 import Login from './Components/Auth/Login/Login.jsx';
@@ -15,19 +18,18 @@ import Wisdoms from './Components/System/Wisdoms/Wisdoms.jsx';
 import Settings from './Components/System/Settings/Settings.jsx';
 import NotFound from './Shared/Not-found/NotFound.jsx';
 
-
 // ProtectedRoute Component Conditional
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   return token ? children : <Navigate to="/login" replace />;
 };
 
-
 function App() {
   return (
-    <div>
+    <Provider store={store}>
       <BrowserRouter>
         <Routes>
+
           {/* Auth Routes */}
           <Route path="/" element={<Auth />}>
             <Route index element={<Login />} />
@@ -35,7 +37,7 @@ function App() {
             <Route path="register" element={<Register />} />
           </Route>
 
-          {/* Protected System Routes */}
+          {/* System Routes */}
           <Route path="system" element={<ProtectedRoute><System /></ProtectedRoute>}>
             <Route index element={<HelloComponent />} />
             <Route path="todos" element={<Todos />}>
@@ -54,7 +56,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </Provider>
   );
 }
 

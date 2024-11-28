@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to right, mediumvioletred, black);
+  background: linear-gradient(to right, var(--system-color), black);
 }
 
 .notfound-card {
@@ -16,7 +16,7 @@
 
 .notfound-card h1 {
   font-size: 72px;
-  color: mediumvioletred;
+  color: var(--system-color);
   margin-bottom: 10px;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .back-home {
-  background-color: mediumvioletred;
+  background-color: var(--system-color);
   color: white;
   border: none;
   padding: 10px 20px;
