@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Define the API slice
+// Define The API URL
 export const authQuery = createApi({
   reducerPath: 'AuthApis',
   baseQuery: fetchBaseQuery({
@@ -14,7 +14,7 @@ export const authQuery = createApi({
     },
   }),
   endpoints: (builder) => ({
-    // Define the login mutation
+    // login mutation
     login: builder.mutation({
       query: (credentials) => ({
         url: "/api/auth/login",
@@ -22,7 +22,7 @@ export const authQuery = createApi({
         body: credentials,
       }),
     }),
-    // Define the register mutation
+    // register mutation
     register: builder.mutation({
       query: (credentials) => ({
         url: "/api/auth/register",
@@ -30,7 +30,7 @@ export const authQuery = createApi({
         body: credentials,
       }),
     }),
-    // Define the add todos mutation
+    // add todos mutation
     addTodos: builder.mutation({
       query: (credentials) => ({
         url: `/api/todos`,
@@ -38,7 +38,7 @@ export const authQuery = createApi({
         body: credentials,
       }),
     }),
-    // Define the get todos mutation
+    // getTodos mutation
     getTodos: builder.mutation({
       query: (credentials) => ({
         url: `/api/todos`,
@@ -46,7 +46,14 @@ export const authQuery = createApi({
         body: credentials,
       }),
     }),
-    // Define the updateTodo mutation
+    // get a single todo by ID
+    getTodoById: builder.query({
+      query: (id) => ({
+        url: `/api/todos/${id}`,
+        method: "GET",
+      }),
+    }),
+    // updateTodo mutation
     updateTodo: builder.mutation({
       query: ({ id, ...credentials }) => ({
         url: `/api/todos/${id}`,
@@ -54,7 +61,15 @@ export const authQuery = createApi({
         body: credentials,
       }),
     }),
-    // Define the profile mutation
+    // delete todo mutation
+    deleteTodo: builder.mutation({
+      query: ({ id, ...credentials }) => ({
+        url: `/api/todos/${id}`,
+        method: "DELETE",
+        body: credentials,
+      }),
+    }),
+    // profile mutation
     profile: builder.mutation({
       query: () => ({
         url: `/api/users/profile`,
@@ -66,4 +81,4 @@ export const authQuery = createApi({
 
 
 
-export const { useLoginMutation, useRegisterMutation, useAddTodosMutation, useGetTodosMutation, useUpdateTodoMutation, useProfileMutation } = authQuery;
+export const { useLoginMutation, useRegisterMutation, useAddTodosMutation, useGetTodosMutation, useGetTodoByIdQuery, useUpdateTodoMutation, useDeleteTodoMutation, useProfileMutation } = authQuery;

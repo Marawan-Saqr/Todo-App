@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Loader from "../../../../Shared/Loader/Loader";
 import axios from "axios";
 import "./GetAllTodos.css";
-import { useAddTodosMutation, useGetTodosMutation } from '../../../../Redux/Query/Auth.query';
+import { useAddTodosMutation, useGetTodosMutation, useDeleteTodoMutation } from '../../../../Redux/Query/Auth.query';
 
 const GetAllTodos = () => {
 
@@ -16,6 +16,7 @@ const GetAllTodos = () => {
   const [loadingTodos, setLoadingTodos] = useState(false);
   const [addTodo] = useAddTodosMutation();
   const [fetchTodos] = useGetTodosMutation();
+  const [deleteTodos] = useDeleteTodoMutation();
   const navigate = useNavigate();
 
 
@@ -100,32 +101,25 @@ const GetAllTodos = () => {
 
 
   // Delete todo Function
-  const deleteTodo = async (todoId) => {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: token ? `Bearer ${token}` : "",
-      "Content-Type": "application/json",
-    };
-    try {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      });
-      if (result.isConfirmed) {
-        await axios.delete(`http://localhost:3000/api/todos/${todoId}`, {
-          headers,
-        });
+  const handleDeleteTodo = async (todoId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (result.isConfirmed) {
+      try {
+        await deleteTodos({ id: todoId }).unwrap();
         Swal.fire("Deleted!", "Your todo has been deleted.", "success");
         setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId));
+      } catch (error) {
+        Swal.fire("Error", "There was an issue deleting the todo.", "error");
+        console.error(error);
       }
-    } catch (error) {
-      Swal.fire("Error", "There was an issue deleting the todo.", "error");
-      console.error(error);
     }
   };
 
@@ -230,7 +224,7 @@ const GetAllTodos = () => {
                       </button>
                       <button
                         className="btn btn-sm btn-outline-danger"
-                        onClick={() => deleteTodo(todo.id)}
+                        onClick={() => handleDeleteTodo(todo.id)}
                       >
                         <i className="fa-solid fa-trash"></i>
                       </button>

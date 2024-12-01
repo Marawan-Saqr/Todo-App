@@ -1,5 +1,4 @@
-1-Code Review.
-2-Edit Todo Details Style.
-3-Wisdoms.
-4-Edit Not Complete After Edit.
-5-Edit Time At Todos.
+1-Edit Todo Details Style.
+2-Wisdoms.
+3-Edit Not Complete After Edit.
+4-Edit Time At Todos.
