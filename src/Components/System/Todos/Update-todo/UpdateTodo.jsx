@@ -3,18 +3,19 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import axios from "axios";
-import "./UpdateTodo.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useUpdateTodoMutation } from "../../../../Redux/Query/Auth.query";
+import "./UpdateTodo.css";
 
 const UpdateTodo = () => {
 
   // Component States
   const { state } = useLocation();
   const navigate = useNavigate();
+  const [updateTodo, { isLoading }] = useUpdateTodoMutation();
 
 
-  // Zod schema
+  // Zod schema for validation
   const todoSchema = z.object({
     title: z
       .string()
@@ -32,47 +33,45 @@ const UpdateTodo = () => {
   });
 
 
-  // React Hook Form Destruct
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm({ 
-    mode: "onTouched", 
-    resolver: zodResolver(todoSchema) 
+  // React Hook Form setup
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+    mode: "onTouched",
+    resolver: zodResolver(todoSchema),
   });
 
 
   // Update Todo Function
-  const updateTodo = async (data) => {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: token ? `Bearer ${token}` : "",
-      "Content-Type": "application/json",
-    };
-    await axios.put(`http://localhost:3000/api/todos/${state.id}`, data, {
-      headers,
-    });
-    Swal.fire(
-      "Success", 
-      `Todo Marked as ${data.done ? "Completed" : "Not Completed"}!`, 
-      "success"
-    );
-    navigate("/system/todos");
+  const handleUpdateTodo = async (data) => {
+    try {
+      await updateTodo({ id: state.id, ...data }).unwrap();
+      Swal.fire(
+        "Success",
+        `Todo Marked as ${data.done ? "Completed" : "Not Completed"}!`,
+        "success"
+      );
+      navigate("/system/todos");
+    } catch (err) {
+      console.error("Error updating todo:", err);
+      Swal.fire("Error", "Failed to update the todo.", "error");
+    }
   };
 
 
-  // UseEffect to Set Initial Values
+  // UseEffect
   useEffect(() => {
     if (state) {
       setValue("title", state.title);
       setValue("description", state.description);
       setValue("done", state.done);
     }
-  }, [state]);
+  }, [state, setValue]);
 
 
   return (
     <div className="update-todo">
       <h2>Update Todo</h2>
       <div className="container">
-        <form className="todo-form" onSubmit={handleSubmit(updateTodo)}>
+        <form className="todo-form" onSubmit={handleSubmit(handleUpdateTodo)}>
           {/* Title */}
           <input
             type="text"
@@ -108,13 +107,15 @@ const UpdateTodo = () => {
             <p className="text-danger">{errors.done.message}</p>
           )}
 
-          <button type="submit" className="submit-button">
-            Submit
+          <button type="submit" className="submit-button" disabled={isLoading}>
+            {isLoading ? "Updating..." : "Submit"}
           </button>
         </form>
       </div>
     </div>
   );
 };
+
+
 
 export default UpdateTodo;

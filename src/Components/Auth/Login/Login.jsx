@@ -20,7 +20,9 @@ const Login = () => {
       .string()
       .nonempty("Email is required")
       .email("Invalid email address"),
-    password: z.string().nonempty("Password is required"),
+    password: z.
+      string()
+      .nonempty("Password is required"),
   });
 
 
@@ -31,7 +33,7 @@ const Login = () => {
   // Login Function
   const onSubmit = async (data) => {
     try {
-      // Sucess Case
+      // Success Case
       const response = await login(data).unwrap();
       const token = response.accessToken;
       if (token) {

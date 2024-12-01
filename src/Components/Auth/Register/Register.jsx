@@ -42,7 +42,6 @@ const Register = () => {
   // Register Function
   const onSubmit = async (data) => {
     try {
-      // Trigger register mutation
       const response = await registerUser(data).unwrap();
       Swal.fire({
         title: "Success!",
@@ -53,7 +52,6 @@ const Register = () => {
         navigate("/login");
       });
     } catch (error) {
-      // Handle registration error
       Swal.fire({
         title: "Error!",
         text: error?.data?.message || "Registration failed. Please try again.",

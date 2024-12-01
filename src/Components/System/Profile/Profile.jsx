@@ -1,67 +1,39 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useProfileMutation } from "../../../Redux/Query/Auth.query";
 import Loader from "../../../Shared/Loader/Loader";
 
 const Profile = () => {
+
   // Component States
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [getProfile] = useProfileMutation();
 
-  // Extract Token To Get Email
-  const getEmailFromToken = () => {
-    const token = localStorage.getItem("token");
-    if (!token) return null;
-    try {
-      const base64Url = token.split(".")[1];
-      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      const jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split("")
-          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-          .join("")
-      );
-      const payload = JSON.parse(jsonPayload);
-      return payload.email || null;
-    } catch (error) {
-      console.error("Invalid token", error);
-      return null;
-    }
-  };
 
   // User Profile Function
   const fetchProfile = async () => {
-    const email = getEmailFromToken();
-    if (email) {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/users/profile`,
-          {
-            params: {
-              email: email,
-            },
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setProfile(response.data);
-      } catch (error) {
-        console.error("Failed to fetch profile data", error);
-      } finally {
-        setLoading(false); // Set loading to false after data is fetched
-      }
+    try {
+      const response = await getProfile().unwrap();
+      setProfile(response);
+    } catch (error) {
+      console.error("Failed to fetch profile", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Use Effect
+
+  // Use Effect to fetch profile data
   useEffect(() => {
     fetchProfile();
   }, []);
+
 
   // If loading, show loader
   if (loading) {
     return <Loader />;
   }
+
 
   return (
     <div className="profile">
@@ -139,5 +111,7 @@ const Profile = () => {
     </div>
   );
 };
+
+
 
 export default Profile;

@@ -7,12 +7,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Loader from "../../../../Shared/Loader/Loader";
 import axios from "axios";
 import "./GetAllTodos.css";
+import { useAddTodosMutation, useGetTodosMutation } from '../../../../Redux/Query/Auth.query';
 
 const GetAllTodos = () => {
+
   // Component States
   const [todos, setTodos] = useState([]);
   const [loadingTodos, setLoadingTodos] = useState(false);
+  const [addTodo] = useAddTodosMutation();
+  const [fetchTodos] = useGetTodosMutation();
   const navigate = useNavigate();
+
 
   // Zod schema
   const todoSchema = z.object({
@@ -28,48 +33,40 @@ const GetAllTodos = () => {
       .max(50, { message: "Description max characters 50 char" }),
   });
 
+
   // React Hook Form Destruct
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     mode: "onChange",
     resolver: zodResolver(todoSchema),
   });
 
-  // Add Todo Function
-  const addTodo = async (data) => {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: token ? `Bearer ${token}` : "",
-      "Content-Type": "application/json",
-    };
+
+    // Add Todo Function
+    const onAddTodo = async (data) => {
     try {
-      await axios.post("http://localhost:3000/api/todos", data, { headers });
+      await addTodo(data).unwrap();
       Swal.fire("Success", "Todo added successfully!", "success");
       reset();
-      getAllTodos();
+      loadTodos();
     } catch (error) {
       Swal.fire("Error", "Failed to add todo", "error");
     }
   };
 
+
   // Get All Todos
-  const getAllTodos = async () => {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: token ? `Bearer ${token}` : "",
-      "Content-Type": "application/json",
-    };
+  const loadTodos = async () => {
     setLoadingTodos(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/todos", {
-        headers,
-      });
-      setTodos(response.data);
+      const data = await fetchTodos().unwrap();
+      setTodos(data);
     } catch (error) {
       console.error("Error fetching todos:", error);
     } finally {
       setLoadingTodos(false);
     }
   };
+
 
   // Update Todo
   const toggleTodoDone = async (todoId, currentStatus, title, description) => {
@@ -101,6 +98,7 @@ const GetAllTodos = () => {
     }
   };
 
+
   // Delete todo Function
   const deleteTodo = async (todoId) => {
     const token = localStorage.getItem("token");
@@ -131,15 +129,17 @@ const GetAllTodos = () => {
     }
   };
 
+
   // UseEffect
   useEffect(() => {
-    getAllTodos();
+    loadTodos();
   }, []);
+
 
   return (
     <div className="table-container">
       <h2>Add Todos</h2>
-      <form className="todo-form" onSubmit={handleSubmit(addTodo)}>
+      <form className="todo-form" onSubmit={handleSubmit(onAddTodo)}>
         {/* Title */}
         <input
           type="text"
@@ -254,5 +254,7 @@ const GetAllTodos = () => {
     </div>
   );
 };
+
+
 
 export default GetAllTodos;
