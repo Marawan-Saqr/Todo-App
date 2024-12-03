@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Loader from "../../../../Shared/Loader/Loader";
 import axios from "axios";
 import "./GetAllTodos.css";
+import { titleName } from '../../../../Contexts/TitleCont';
 import { useAddTodosMutation, useGetTodosMutation, useDeleteTodoMutation } from '../../../../Redux/Query/Auth.query';
 
 const GetAllTodos = () => {
@@ -17,10 +18,12 @@ const GetAllTodos = () => {
   const [addTodo] = useAddTodosMutation();
   const [fetchTodos] = useGetTodosMutation();
   const [deleteTodos] = useDeleteTodoMutation();
+  const { title, changeTitle } = useContext(titleName);
   const navigate = useNavigate();
 
 
-  // Zod schema
+
+  // Zod Scheme Validation
   const todoSchema = z.object({
     title: z
       .string()
@@ -35,15 +38,14 @@ const GetAllTodos = () => {
   });
 
 
-  // React Hook Form Destruct
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
-    mode: "onChange",
-    resolver: zodResolver(todoSchema),
-  });
+
+  // React Hook Form Setup
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: "onChange", resolver: zodResolver(todoSchema) });
 
 
-    // Add Todo Function
-    const onAddTodo = async (data) => {
+
+  // Add Todo Function
+  const onAddTodo = async (data) => {
     try {
       await addTodo(data).unwrap();
       Swal.fire("Success", "Todo added successfully!", "success");
@@ -55,7 +57,8 @@ const GetAllTodos = () => {
   };
 
 
-  // Get All Todos
+
+  // Load All Todos Function
   const loadTodos = async () => {
     setLoadingTodos(true);
     try {
@@ -69,7 +72,8 @@ const GetAllTodos = () => {
   };
 
 
-  // Update Todo
+
+  // Update Todo Toggle Function
   const toggleTodoDone = async (todoId, currentStatus, title, description) => {
     const token = localStorage.getItem("token");
     const headers = {
@@ -100,7 +104,8 @@ const GetAllTodos = () => {
   };
 
 
-  // Delete todo Function
+
+  // Delete Todo Function
   const handleDeleteTodo = async (todoId) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -124,17 +129,25 @@ const GetAllTodos = () => {
   };
 
 
-  // UseEffect
+
+  // useEffect For Change Title
+  useEffect(() => {
+    changeTitle("Add Todos");
+  }, [changeTitle]);
+
+
+
+  // useEffect For Load Todos When Changed
   useEffect(() => {
     loadTodos();
   }, []);
 
 
+
   return (
     <div className="table-container">
-      <h2>Add Todos</h2>
+      <h2>{title}</h2>
       <form className="todo-form" onSubmit={handleSubmit(onAddTodo)}>
-        {/* Title */}
         <input
           type="text"
           placeholder="Title"
@@ -142,8 +155,6 @@ const GetAllTodos = () => {
           {...register("title")}
         />
         {errors.title && <p className="text-danger">{errors.title.message}</p>}
-
-        {/* Description */}
         <textarea
           placeholder="Description"
           className="input-field"
@@ -157,93 +168,87 @@ const GetAllTodos = () => {
         </button>
       </form>
 
-      {/* My Todos */}
       <hr />
-      <h3>My Todos</h3>
+      <h3>{title}</h3>
       <h6>
         You Have Now <span>{todos.length}</span>
         {todos.length > 1 ? " Tasks" : " Task"}
       </h6>
+      {!loadingTodos && todos.length === 0 && (
+        <h3>
+          No todos found. Enjoy your day!{" "}
+          <i className="fa-regular fa-face-smile"></i>
+        </h3>
+      )}
       <div className="table-responsive">
-        <table className="table table-dark">
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Description</th>
-              <th scope="col">Status</th>
-              <th scope="col">Created Time</th>
-              <th scope="col">Updated Time</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loadingTodos ? (
-              <tr>
-                <td colSpan="6" className="text-center">
-                  <Loader />
-                </td>
-              </tr>
-            ) : todos.length > 0 ? (
-              todos.map((todo) => (
-                <tr key={todo.id}>
-                  <td>{todo.title}</td>
-                  <td>{todo.description}</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={todo.done}
-                      onChange={() =>
-                        toggleTodoDone(
-                          todo.id,
-                          todo.done,
-                          todo.title,
-                          todo.description
-                        )
-                      }
-                    />
-                  </td>
-                  <td>{todo.createdAt}</td>
-                  <td>{todo.updatedAt}</td>
-                  <td>
-                    <div className="btn-group" role="group">
-                      <Link
-                        to={`/system/todos/todo-details/${todo.id}`}
-                        className="btn btn-sm btn-outline-primary"
-                      >
-                        <i className="fa-solid fa-eye"></i>
-                      </Link>
-                      <button
-                        className="btn btn-sm btn-outline-secondary"
-                        onClick={() =>
-                          navigate(`/system/todos/update-todo/${todo.id}`, {
-                            state: todo,
-                          })
-                        }
-                      >
-                        <i className="fa-solid fa-pen"></i>
-                      </button>
-                      <button
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleDeleteTodo(todo.id)}
-                      >
-                        <i className="fa-solid fa-trash"></i>
-                      </button>
-                    </div>
-                  </td>
+        {loadingTodos ? (
+          <Loader />
+        ) : (
+          todos.length > 0 && (
+            <table className="table table-dark">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Created Time</th>
+                  <th scope="col">Updated Time</th>
+                  <th scope="col">Action</th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="text-center">
-                  <h3>
-                    No Todos Enjoy Your Day{" "}
-                    <i className="fa-regular fa-face-smile"></i>
-                  </h3>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {todos.map((todo) => (
+                  <tr key={todo.id}>
+                    <td>{todo.title}</td>
+                    <td>{todo.description}</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={todo.done}
+                        onChange={() =>
+                          toggleTodoDone(
+                            todo.id,
+                            todo.done,
+                            todo.title,
+                            todo.description
+                          )
+                        }
+                      />
+                    </td>
+                    <td>{todo.createdAt}</td>
+                    <td>{todo.updatedAt}</td>
+                    <td>
+                      <div className="btn-group" role="group">
+                        <Link
+                          to={`/system/todos/todo-details/${todo.id}`}
+                          className="btn btn-sm btn-outline-primary"
+                        >
+                          <i className="fa-solid fa-eye"></i>
+                        </Link>
+                        <button
+                          className="btn btn-sm btn-outline-secondary"
+                          onClick={() =>
+                            navigate(`/system/todos/update-todo/${todo.id}`, {
+                              state: todo,
+                            })
+                          }
+                        >
+                          <i className="fa-solid fa-pen"></i>
+                        </button>
+                        <button
+                          className="btn btn-sm btn-outline-danger"
+                          onClick={() => handleDeleteTodo(todo.id)}
+                        >
+                          <i className="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
+        )}
       </div>
     </div>
   );

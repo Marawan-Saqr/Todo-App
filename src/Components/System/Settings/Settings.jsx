@@ -1,7 +1,20 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import { ListGroup, Container, Row, Col, Card } from "react-bootstrap";
+import { titleName } from '../../../Contexts/TitleCont';
+
 
 const Settings = () => {
+
+  // Component States
+  const { title, changeTitle } = useContext(titleName);
+
+
+  // useEffect
+  useEffect(() => {
+    changeTitle("Settings");
+  }, [changeTitle]);
+
+
   return (
     <div className="settings mt-5">
       <Container
@@ -12,7 +25,7 @@ const Settings = () => {
           <Col md={4} className="mx-auto">
             <Card className="shadow">
               <Card.Body>
-                <h3 className="text-center mb-4">Settings</h3>
+                <h3 className="text-center mb-4">{title}</h3>
                 <ListGroup variant="flush">
                   <ListGroup.Item>Account Settings</ListGroup.Item>
                   <ListGroup.Item>Privacy Settings</ListGroup.Item>
@@ -28,5 +41,7 @@ const Settings = () => {
     </div>
   );
 };
+
+
 
 export default Settings;

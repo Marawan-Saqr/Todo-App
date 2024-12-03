@@ -1,16 +1,18 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Swal from "sweetalert2";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegisterMutation } from "../../../Redux/Query/Auth.query";
+import { titleName } from '../../../Contexts/TitleCont';
 import "./Register.css";
 
 const Register = () => {
 
   // Component States
   const navigate = useNavigate();
+  const { title, changeTitle } = useContext(titleName);
   const [registerUser, { isLoading }] = useRegisterMutation();
 
 
@@ -62,10 +64,16 @@ const Register = () => {
   };
 
 
+  // useEffect
+  useEffect(() => {
+    changeTitle("register");
+  }, [changeTitle]);
+
+
   return (
     <div className="register d-flex justify-content-center align-items-center">
       <div className="form-container">
-        <h1 className="text-center pt-2 pb-2 mb-0 fw-bold" style={{ color: "black" }}>Register</h1>
+        <h1 className="text-center pt-2 pb-2 mb-0 fw-bold" style={{ color: "black" }}>{title}</h1>
         <h6 className="text-center text-danger mb-4">Note That After Registration You Will Login</h6>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-group">

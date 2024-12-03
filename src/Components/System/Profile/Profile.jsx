@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useProfileMutation } from "../../../Redux/Query/Auth.query";
 import Loader from "../../../Shared/Loader/Loader";
+import { titleName } from '../../../Contexts/TitleCont';
 
 const Profile = () => {
 
   // Component States
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [getProfile] = useProfileMutation();
+  const [ getProfile ] = useProfileMutation();
+  const { title, changeTitle } = useContext(titleName);
 
 
   // User Profile Function
@@ -21,6 +23,12 @@ const Profile = () => {
       setLoading(false);
     }
   };
+
+
+  // useEffect
+  useEffect(() => {
+    changeTitle("Your Profile");
+  }, [changeTitle]);
 
 
   // Use Effect to fetch profile data
@@ -37,7 +45,7 @@ const Profile = () => {
 
   return (
     <div className="profile">
-      <h2 className="text-center m-4">Your Profile</h2>
+      <h2 className="text-center m-4">{title}</h2>
       <div className="container">
         <div className="main-body">
           <div className="row gutters-sm">
