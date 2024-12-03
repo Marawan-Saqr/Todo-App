@@ -86,7 +86,6 @@ const TopBar = () => {
               <Link className="nav-link" to={"todos"}><i className="fa-solid fa-pencil"></i>Todos</Link>
               <Link className="nav-link" to={"/system/profile"}><i className="fa-solid fa-user"></i>Profile</Link>
               <Link className="nav-link" to={"/system/charts"}><i className="fa-solid fa-chart-simple"></i>Statistics</Link>
-              <Link className="nav-link" to={"/system/wisdoms"}><i className="fa-solid fa-file-word"></i>Wisdoms</Link>
               <Link className="nav-link" to={"/system/settings"}><i className="fa-solid fa-gear"></i>Settings</Link>
             </Nav>
             <div className='options'>

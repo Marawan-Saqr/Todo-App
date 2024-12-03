@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useProfileMutation } from "../../../Redux/Query/Auth.query";
 import Loader from "../../../Shared/Loader/Loader";
 import { titleName } from '../../../Contexts/TitleCont';
+import './Profile.css';
 
 const Profile = () => {
 
