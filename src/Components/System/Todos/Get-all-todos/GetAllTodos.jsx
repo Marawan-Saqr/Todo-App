@@ -215,8 +215,8 @@ const GetAllTodos = () => {
                         }
                       />
                     </td>
-                    <td>{todo.createdAt}</td>
-                    <td>{todo.updatedAt}</td>
+                    <td>{todo?.createdAt ? new Date(todo.createdAt).toLocaleDateString() : "N/A"}</td>
+                    <td>{todo?.updatedAt ? new Date(todo.updatedAt).toLocaleDateString() : "N/A"}</td>
                     <td>
                       <div className="btn-group" role="group">
                         <Link

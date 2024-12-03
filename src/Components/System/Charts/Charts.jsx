@@ -9,13 +9,13 @@ const Charts = () => {
   const { title, changeTitle } = useContext(titleName);
 
 
-  // useEffect
+  // useEffect To Change Title
   useEffect(() => {
     changeTitle("TODO LOGIN COUNT");
   }, [changeTitle]);
 
 
-  // useEffect
+  // useEffect To Get Login Data
   useEffect(() => {
     const loginData = JSON.parse(localStorage.getItem("loginData"));
     if (loginData && loginData.history) {
@@ -42,6 +42,18 @@ const Charts = () => {
             <Line type="monotone" dataKey="count" stroke="#8884d8" />
           </LineChart>
         </ResponsiveContainer>
+        <hr />
+        <div className="login-data-show">
+          <h4>Your Login Data</h4>
+          <ul>
+            {loginHistory.map((entry, index) => (
+              <li key={index}>
+                <strong>Date:</strong> {entry.date} <br />
+                <strong>Login Count:</strong> {entry.count}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

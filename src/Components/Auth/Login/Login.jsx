@@ -33,6 +33,25 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onTouched", resolver: zodResolver(schema) });
 
 
+  // Set Login Data In Localstorage Function
+  const setLoginData = () => {
+    let loginData = JSON.parse(localStorage.getItem("loginData")) || {
+      loginCount: 0,
+      history: [],
+    };
+    loginData.loginCount++;
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleString();
+    const loginEntry = {
+      count: loginData.loginCount,
+      date: formattedDate,
+      day: currentDate.toLocaleString("en-us", { weekday: "long" }),
+    };
+    loginData.history.push(loginEntry);
+    localStorage.setItem("loginData", JSON.stringify(loginData));
+  }
+
+
   // Login Function
   const onSubmit = async (data) => {
     try {
@@ -41,23 +60,10 @@ const Login = () => {
       const token = response.accessToken;
       if (token) {
         localStorage.setItem("token", token);
-        let loginData = JSON.parse(localStorage.getItem("loginData")) || {
-          loginCount: 0,
-          history: [],
-        };
-        loginData.loginCount++;
-        const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleString();
-        const loginEntry = {
-          count: loginData.loginCount,
-          date: formattedDate,
-          day: currentDate.toLocaleString("en-us", { weekday: "long" }),
-        };
-        loginData.history.push(loginEntry);
-        localStorage.setItem("loginData", JSON.stringify(loginData));
+        setLoginData();
         Swal.fire({
           title: "Success!",
-          text: `You have logged in successfully! Login count: ${loginData.loginCount}\nLast login: ${loginEntry.date} (${loginEntry.day})`,
+          text: `You have logged in successfully!)`,
           icon: "success",
           confirmButtonText: "OK",
         }).then(() => {
