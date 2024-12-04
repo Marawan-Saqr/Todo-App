@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store/Store.js";
 import { TitleContextProvider } from "./Contexts/TitleCont.jsx";
+import { WisdomContextProvider } from "./Contexts/WisdomCont.jsx";
 import Auth from "./Components/Auth/Auth.jsx";
 import Register from "./Components/Auth/Register/Register.jsx";
 import Login from "./Components/Auth/Login/Login.jsx";
@@ -17,7 +18,7 @@ import Profile from "./Components/System/Profile/Profile.jsx";
 import Charts from "./Components/System/Charts/Charts.jsx";
 import Settings from "./Components/System/Settings/Settings.jsx";
 import NotFound from "./Shared/Not-found/NotFound.jsx";
-import { WisdomContextProvider } from "./Contexts/WisdomCont.jsx";
+
 
 // ProtectedRoute Component Conditional
 const ProtectedRoute = ({ children }) => {
@@ -40,22 +41,12 @@ function App() {
               </Route>
 
               {/* System Routes */}
-              <Route
-                path="system"
-                element={
-                  <ProtectedRoute>
-                    <System />
-                  </ProtectedRoute>
-                }
-              >
+              <Route path="system" element={<ProtectedRoute><System /></ProtectedRoute>}>
                 <Route index element={<HelloComponent />} />
                 <Route path="todos" element={<Todos />}>
                   <Route index element={<GetAllTodos />} />
                   <Route path="get-all-todos" element={<GetAllTodos />} />
-                  <Route
-                    path="todo-details/:TODOID"
-                    element={<TodoDetails />}
-                  />
+                  <Route path="todo-details/:TODOID" element={<TodoDetails />} />
                   <Route path="update-todo/:TODOID" element={<UpdateTodo />} />
                 </Route>
                 <Route path="profile" element={<Profile />} />
@@ -72,5 +63,6 @@ function App() {
     </Provider>
   );
 }
+
 
 export default App;

@@ -1,2 +1,0 @@
-1-Slice Project Functions Into Small Functions.
-2-Toggle Problems (Details, Edit).

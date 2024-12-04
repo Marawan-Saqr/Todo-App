@@ -34,7 +34,12 @@ const UpdateTodo = () => {
 
 
   // React Hook Form setup
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
     mode: "onTouched",
     resolver: zodResolver(todoSchema),
   });
@@ -57,12 +62,11 @@ const UpdateTodo = () => {
   };
 
 
-  // UseEffect
   useEffect(() => {
     if (state) {
       setValue("title", state.title);
       setValue("description", state.description);
-      setValue("done", state.done);
+      setValue("done", state.done ? "true" : "false"); // Convert boolean to string for <select>
     }
   }, [state, setValue]);
 
@@ -97,15 +101,14 @@ const UpdateTodo = () => {
           <select
             className="input-field"
             {...register("done", {
-              setValueAs: (value) => value === "true",
+              setValueAs: (value) => value === "true", // Convert string to boolean
             })}
+            defaultValue={state?.done.toString()} // Convert boolean to string for matching <select>
           >
             <option value="true">Completed</option>
             <option value="false">Not Completed</option>
           </select>
-          {errors.done && (
-            <p className="text-danger">{errors.done.message}</p>
-          )}
+          {errors.done && <p className="text-danger">{errors.done.message}</p>}
 
           <button type="submit" className="submit-button" disabled={isLoading}>
             {isLoading ? "Updating..." : "Submit"}
@@ -115,7 +118,5 @@ const UpdateTodo = () => {
     </div>
   );
 };
-
-
 
 export default UpdateTodo;

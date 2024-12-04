@@ -50,6 +50,7 @@ const Charts = () => {
               <li key={index}>
                 <strong>Date:</strong> {entry.date} <br />
                 <strong>Login Count:</strong> {entry.count}
+                <hr />
               </li>
             ))}
           </ul>

@@ -169,7 +169,7 @@ const GetAllTodos = () => {
       </form>
 
       <hr />
-      <h3>{title}</h3>
+      <h3>My Todos</h3>
       <h6>
         You Have Now <span>{todos.length}</span>
         {todos.length > 1 ? " Tasks" : " Task"}

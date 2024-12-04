@@ -1,8 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
 
-
-
-
 const wisdomName = createContext();
 
 const WisdomContextProvider = ({ children }) => {
@@ -35,8 +32,8 @@ const WisdomContextProvider = ({ children }) => {
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
-            <p>{wisdom || "متفكرش كتير ربك كبير"}</p>
-            <button onClick={closePopup}>Close</button>
+            <p>{wisdom || "توكل وسيبها على الله متفكرش كتير ربك كبير"}</p>
+            <button onClick={closePopup}>اغلاق</button>
           </div>
         </div>
       )}

@@ -90,7 +90,7 @@ const Login = () => {
   };
 
 
-  // useEffect
+  // useEffect To Change Title
   useEffect(() => {
     changeTitle("login");
   }, [changeTitle]);
@@ -108,6 +108,8 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-group">
             <label htmlFor="email">Email</label>
+
+            {/* Email */}
             <input
               type="email"
               placeholder="Enter your email"
@@ -117,6 +119,8 @@ const Login = () => {
               <p className="text-danger mt-2">{errors.email.message}</p>
             )}
           </div>
+
+          {/* Password */}
           <div className="input-group">
             <label htmlFor="password">Password</label>
             <input
@@ -128,6 +132,8 @@ const Login = () => {
               <p className="text-danger mt-2">{errors.password.message}</p>
             )}
           </div>
+
+          {/* Submit Form */}
           <button type="submit" className="btn" disabled={isLoading}>
             {isLoading ? "Loading..." : "Login"}
           </button>

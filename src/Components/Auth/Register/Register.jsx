@@ -64,7 +64,7 @@ const Register = () => {
   };
 
 
-  // useEffect
+  // useEffect To Change Title
   useEffect(() => {
     changeTitle("register");
   }, [changeTitle]);
@@ -139,5 +139,7 @@ const Register = () => {
     </div>
   );
 };
+
+
 
 export default Register;

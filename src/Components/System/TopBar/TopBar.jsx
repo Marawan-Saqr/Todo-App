@@ -20,6 +20,9 @@ const TopBar = () => {
     document.body.classList.toggle('dark-mode', !isDarkMode);
     localStorage.setItem('darkMode', !isDarkMode);
   };
+
+
+  // UseEffect To Toggle Dark Mode
   useEffect(() => {
     const darkModePreference = localStorage.getItem('darkMode');
     if (darkModePreference) {

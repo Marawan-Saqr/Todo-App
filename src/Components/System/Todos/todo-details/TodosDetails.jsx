@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 import { useGetTodoByIdQuery } from "../../../../Redux/Query/Auth.query";
 import Loader from "../../../../Shared/Loader/Loader";
 import "./TodoDetails.css";
@@ -7,8 +8,12 @@ const TodosDetails = () => {
 
   // Component States
   const param = useParams();
-  const { data: todo, error, isLoading } = useGetTodoByIdQuery(param.TODOID);
+  const { data: todo, error, isLoading, refetch } = useGetTodoByIdQuery(param.TODOID);
 
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   // Show Loader While Data Fetched
   if (isLoading) {
